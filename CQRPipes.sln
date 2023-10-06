@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pipes.Abstractions", "src\Pipes.Abstractions\Pipes.Abstractions.csproj", "{655DA687-4D9A-4156-9D8D-168A2D306594}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{BE6E2D72-520C-4358-A8A8-8D572CF8A1F0}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{655DA687-4D9A-4156-9D8D-168A2D306594}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{655DA687-4D9A-4156-9D8D-168A2D306594}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{655DA687-4D9A-4156-9D8D-168A2D306594}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{655DA687-4D9A-4156-9D8D-168A2D306594}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
