@@ -10,5 +10,12 @@ namespace Pipes.Abstractions.Query;
 [PublicAPI]
 public interface IQueryPipe<TRequest, TResponse> where TRequest : IQuery<TResponse>
 {
-    Task HandleAsync(QueryContext<TRequest, TResponse> context, Func<QueryContext<TRequest, TResponse>> next);
+    /// <summary>
+    /// Handle current query pipe
+    /// </summary>
+    /// <param name="context">Query context</param>
+    /// <param name="next">Next pipe</param>
+    /// <param name="token"><see cref="CancellationToken"/></param>
+    /// <returns><see cref="Task"/></returns>
+    Task HandleAsync(QueryContext<TRequest, TResponse> context, Func<QueryContext<TRequest, TResponse>> next, CancellationToken token = default);
 }

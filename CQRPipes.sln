@@ -7,6 +7,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{BE6E2D72
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8C4B06E6-AA5D-43C1-9F0D-087062364686}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pipes", "src\Pipes\Pipes.csproj", "{EEE8402D-ECFC-4D48-92BF-322B08976AB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pipes.Tests", "tests\Pipes.Tests\Pipes.Tests.csproj", "{9869D0F8-1ECC-4889-9347-88B532C2624E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,5 +23,16 @@ Global
 		{655DA687-4D9A-4156-9D8D-168A2D306594}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{655DA687-4D9A-4156-9D8D-168A2D306594}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{655DA687-4D9A-4156-9D8D-168A2D306594}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEE8402D-ECFC-4D48-92BF-322B08976AB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEE8402D-ECFC-4D48-92BF-322B08976AB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEE8402D-ECFC-4D48-92BF-322B08976AB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEE8402D-ECFC-4D48-92BF-322B08976AB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9869D0F8-1ECC-4889-9347-88B532C2624E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9869D0F8-1ECC-4889-9347-88B532C2624E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9869D0F8-1ECC-4889-9347-88B532C2624E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9869D0F8-1ECC-4889-9347-88B532C2624E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9869D0F8-1ECC-4889-9347-88B532C2624E} = {8C4B06E6-AA5D-43C1-9F0D-087062364686}
 	EndGlobalSection
 EndGlobal
