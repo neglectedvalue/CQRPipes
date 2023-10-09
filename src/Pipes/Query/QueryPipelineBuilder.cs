@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using Pipes.Abstractions.Query;
+﻿using Pipes.Abstractions.Query;
 
 namespace Pipes.Query;
 
@@ -13,5 +12,5 @@ public sealed class QueryPipelineBuilder<TRequest, TResponse> :
         _pipeTypes.Add(typeof(TQueryPipe));
     }
 
-    public ImmutableArray<Type> GetTypes() => _pipeTypes.ToImmutableArray();
+    public Type[] GetPipeTypes() => _pipeTypes.ToArray();
 }

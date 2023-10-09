@@ -18,7 +18,7 @@ public class QueryContext<TRequest, TResponse>
     /// </summary>
     /// <param name="request">Request</param>
     /// <param name="response">Response</param>
-    public QueryContext(TRequest request, TResponse response)
+    public QueryContext(TRequest request, TResponse response = default!)
     {
         Request = request;
         Response = response;

@@ -17,5 +17,5 @@ public interface IQueryPipe<TRequest, TResponse> where TRequest : IQuery<TRespon
     /// <param name="next">Next pipe</param>
     /// <param name="token"><see cref="CancellationToken"/></param>
     /// <returns><see cref="Task"/></returns>
-    Task HandleAsync(QueryContext<TRequest, TResponse> context, Func<QueryContext<TRequest, TResponse>> next, CancellationToken token = default);
+    Task HandleAsync(QueryContext<TRequest, TResponse> context, Func<QueryContext<TRequest, TResponse>, Task> next, CancellationToken token = default);
 }
