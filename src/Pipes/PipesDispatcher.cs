@@ -25,7 +25,8 @@ public class PipesDispatcher : IPipesDispatcher
 
         var context = new QueryContext<TRequest, TResponse>(request);
         var pipelineBuilder = new QueryPipelineBuilder<TRequest, TResponse>();
-        var pipeline = _serviceProvider.GetRequiredService<IQueryPipeline<TRequest, TResponse>>() ?? throw new InvalidOperationException($"Pipeline does not exist for request '{request.GetType().FullName}'.");
+        var pipeline = _serviceProvider.GetRequiredService<IQueryPipeline<TRequest, TResponse>>() ?? 
+                       throw new InvalidOperationException($"Pipeline does not exist for request '{request.GetType().FullName}'.");
         
         pipeline.Configure(pipelineBuilder);
         await ExecuteQueryPipelineAsync(pipelineBuilder.GetPipeTypes(), context, token);
@@ -42,7 +43,8 @@ public class PipesDispatcher : IPipesDispatcher
             return;
         }
 
-        var pipe = _serviceProvider.GetService(pipes.First()) as IQueryPipe<TRequest, TResponse> ?? throw new InvalidOperationException($"Pipe named '{pipes.First().FullName}' is not valid.");
+        var pipe = _serviceProvider.GetService(pipes.First()) as IQueryPipe<TRequest, TResponse> ?? 
+                   throw new InvalidOperationException($"Pipe named '{pipes.First().FullName}' is not valid.");
         await pipe.HandleAsync(context, async ctx =>
         {
             if (pipes.Length > 1)
