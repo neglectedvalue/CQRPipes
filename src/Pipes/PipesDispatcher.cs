@@ -43,7 +43,7 @@ public class PipesDispatcher : IPipesDispatcher
             return;
         }
 
-        var pipe = _serviceProvider.GetService(pipes.First()) as IQueryPipe<TRequest, TResponse> ?? 
+        var pipe = _serviceProvider.GetRequiredService(pipes.First()) as IQueryPipe<TRequest, TResponse> ?? 
                    throw new InvalidOperationException($"Pipe named '{pipes.First().FullName}' is not valid.");
         await pipe.HandleAsync(context, async ctx =>
         {
