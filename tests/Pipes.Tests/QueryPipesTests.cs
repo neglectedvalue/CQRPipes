@@ -1,14 +1,12 @@
-using System.Reflection;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
-using Pipes.Abstractions.Query;
 using Pipes.Query;
+using Pipes.Tests.Queries;
 
 namespace Pipes.Tests;
 
 public class QueryPipesTests
 {
-    
     [Fact]
     public void PipelineBuilder_GetPipeTypes_ShouldReturnCorrectLenght()
     {
@@ -31,26 +29,18 @@ public class QueryPipesTests
 
         await dispatcher.Execute<SimpleQuery, Guid>(simpleQuery, CancellationToken.None);
     }
-}
-
-public class SimpleQuery : IQuery<Guid>
-{
-    public string Title { get; init; } = "UT";
-}
-
-public class SimpleQueryPipe : IQueryPipe<SimpleQuery, Guid>
-{
-    public async Task HandleAsync(QueryContext<SimpleQuery, Guid> context, Func<QueryContext<SimpleQuery, Guid>, Task> next, CancellationToken token = default)
+    
+    [Fact]
+    public async Task QueryDispatcher_ExecuteMathQuery_ShouldNotFail()
     {
-        context.Response = Guid.NewGuid();
-        await next(context);
-    }
-}
+        IServiceCollection serviceCollection = new ServiceCollection();
+        serviceCollection.AddQueryPipes(ServiceLifetime.Transient, GetType().Assembly);
+        
+        var dispatcher = new PipesDispatcher(serviceCollection.BuildServiceProvider());
+        var mathQuery = new MathQuery { Number = 2};
 
-public class SimpleQueryPipeline : IQueryPipeline<SimpleQuery, Guid>
-{
-    public void Configure(IQueryPipelineBuilder<SimpleQuery, Guid> builder)
-    {
-        builder.Use<SimpleQueryPipe>();
+        var result = await dispatcher.Execute<MathQuery, long>(mathQuery, CancellationToken.None);
+
+        result.Should().Be(3);
     }
 }
