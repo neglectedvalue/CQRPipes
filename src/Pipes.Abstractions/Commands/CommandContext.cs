@@ -3,14 +3,12 @@
 namespace Pipes.Abstractions.Commands;
 
 [PublicAPI]
-public sealed class CommandContext<TRequest, TResponse>
+public sealed class CommandContext<TRequest>
 {
     public TRequest  Request { get; set; }
-    public TResponse Response { get; set; }
 
-    public CommandContext(TRequest request, TResponse response)
+    public CommandContext(TRequest request)
     {
         Request = request;
-        Response = response;
     }
 }

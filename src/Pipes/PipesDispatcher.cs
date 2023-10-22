@@ -2,6 +2,8 @@
 using Pipes.Abstractions.Query;
 using Pipes.Query;
 using Microsoft.Extensions.DependencyInjection;
+using Pipes.Abstractions.Commands;
+using Pipes.Command;
 
 namespace Pipes;
 
@@ -14,7 +16,7 @@ public class PipesDispatcher : IPipesDispatcher
         _serviceProvider = serviceProvider;
     }
 
-    public async Task<TResponse> Execute<TRequest, TResponse>(TRequest request, CancellationToken token)
+    public async Task<TResponse> ExecuteAsync<TRequest, TResponse>(TRequest request, CancellationToken token)
         where TRequest : IQuery<TResponse>
     {
         if (_serviceProvider.GetService(typeof(IQueryHandler<TRequest, TResponse>)) is
@@ -32,6 +34,43 @@ public class PipesDispatcher : IPipesDispatcher
         await ExecuteQueryPipelineAsync(pipelineBuilder.GetPipeTypes(), context, token);
 
         return context.Response;
+    }
+
+    public async Task ExecuteAsync<TRequest>(TRequest request, CancellationToken token) where TRequest : ICommand
+    {
+        if (_serviceProvider.GetService(typeof(ICommandHandler<TRequest>)) is
+            ICommandHandler<TRequest> commandHandler)
+        {
+            await commandHandler.HandleAsync(request, token);
+        }
+
+        var context = new CommandContext<TRequest>(request);
+        var pipelineBuilder = new CommandPipelineBuilder<TRequest>();
+        var pipeline = _serviceProvider.GetRequiredService<ICommandPipeline<TRequest>>() ?? 
+                       throw new InvalidOperationException($"Pipeline does not exist for request '{request.GetType().FullName}'.");
+        
+        pipeline.Configure(pipelineBuilder);
+        await ExecuteCommandPipelineAsync(pipelineBuilder.GetPipeTypes(), context, token);
+    }
+
+    private async Task ExecuteCommandPipelineAsync<TRequest>(Type[] pipes,
+        CommandContext<TRequest> context,
+        CancellationToken token) where TRequest : ICommand
+    {
+        if (pipes.Length is 0)
+        {
+            return;
+        }
+
+        var pipe = _serviceProvider.GetRequiredService(pipes.First()) as ICommandPipe<TRequest> ?? 
+                   throw new InvalidOperationException($"Pipe named '{pipes.First().FullName}' is not valid.");
+        await pipe.HandleAsync(context, async ctx =>
+        {
+            if (pipes.Length > 1)
+            {
+                await ExecuteCommandPipelineAsync(pipes.Skip(1).ToArray(), ctx, token);
+            }
+        }, token);
     }
 
     private async Task ExecuteQueryPipelineAsync<TRequest, TResponse>(Type[] pipes,

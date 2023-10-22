@@ -3,7 +3,7 @@
 namespace Pipes.Abstractions.Commands;
 
 [PublicAPI]
-public interface ICommandPipeline<TRequest, TResponse> where TRequest: ICommand<TResponse>
+public interface ICommandPipeline<TRequest> where TRequest: ICommand
 {
-    void Configure(ICommandPipelineBuilder<TRequest, TResponse> builder);
+    void Configure(ICommandPipelineBuilder<TRequest> builder);
 }

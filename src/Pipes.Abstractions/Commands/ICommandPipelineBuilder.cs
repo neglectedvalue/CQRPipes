@@ -1,6 +1,6 @@
 ﻿namespace Pipes.Abstractions.Commands;
 
-public interface ICommandPipelineBuilder<TRequest, TResponse> where TRequest : ICommand<TResponse>
+public interface ICommandPipelineBuilder<TRequest> where TRequest : ICommand
 {
-    void Use<TCommandPipe>() where TCommandPipe : ICommandPipe<TRequest, TResponse>;
+    void Use<TCommandPipe>() where TCommandPipe : ICommandPipe<TRequest>;
 }

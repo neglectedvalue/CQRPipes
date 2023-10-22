@@ -3,4 +3,4 @@
 namespace Pipes.Abstractions.Commands;
 
 [PublicAPI]
-public interface ICommand<TResponse> { }
+public interface ICommand { }

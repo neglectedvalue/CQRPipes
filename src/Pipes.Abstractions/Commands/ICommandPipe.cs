@@ -3,8 +3,8 @@
 namespace Pipes.Abstractions.Commands;
 
 [PublicAPI]
-public interface ICommandPipe<TRequest, TResponse> where TRequest : ICommand<TResponse>
+public interface ICommandPipe<TRequest> where TRequest : ICommand
 {
-    Task HandleAsync(CommandContext<TRequest, TResponse> context, Func<CommandContext<TRequest, TResponse>, Task> next,
+    Task HandleAsync(CommandContext<TRequest> context, Func<CommandContext<TRequest>, Task> next,
         CancellationToken token = default);
 }

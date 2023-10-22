@@ -27,7 +27,7 @@ public class QueryPipesTests
         var dispatcher = new PipesDispatcher(serviceCollection.BuildServiceProvider());
         var simpleQuery = new SimpleQuery();
 
-        await dispatcher.Execute<SimpleQuery, Guid>(simpleQuery, CancellationToken.None);
+        await dispatcher.ExecuteAsync<SimpleQuery, Guid>(simpleQuery, CancellationToken.None);
     }
     
     [Fact]
@@ -39,7 +39,7 @@ public class QueryPipesTests
         var dispatcher = new PipesDispatcher(serviceCollection.BuildServiceProvider());
         var mathQuery = new MathQuery { Number = 2};
 
-        var result = await dispatcher.Execute<MathQuery, long>(mathQuery, CancellationToken.None);
+        var result = await dispatcher.ExecuteAsync<MathQuery, long>(mathQuery, CancellationToken.None);
 
         result.Should().Be(3);
     }
