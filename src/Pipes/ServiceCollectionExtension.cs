@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Pipes.Abstractions;
+using Pipes.Abstractions.Commands;
 using Pipes.Abstractions.Query;
 using Scrutor;
 
@@ -29,18 +30,32 @@ public static class ServiceCollectionExtension
     private static void ApplyCqrPipesTypes(this IImplementationTypeSelector selector, ServiceLifetime lifetime = ServiceLifetime.Scoped)
     {
         selector
-            // pipes
+            // query pipes
             .AddClasses(items => items.AssignableTo(typeof(IQueryPipe<,>)))
             .AsImplementedInterfaces()
             .AsSelf()
             .WithLifetime(lifetime)
-            // pipelines
+            // query pipelines
             .AddClasses(items => items.AssignableTo(typeof(IQueryPipeline<,>)))
             .AsImplementedInterfaces()
             .WithLifetime(lifetime)
             // query handlers
             .AddClasses(items => items.AssignableTo(typeof(IQueryHandler<,>)))
             .AsImplementedInterfaces()
-            .WithLifetime(lifetime);
+            .WithLifetime(lifetime)
+            // command pipes
+            .AddClasses(items => items.AssignableTo(typeof(ICommandPipe<>)))
+            .AsImplementedInterfaces()
+            .AsSelf()
+            .WithLifetime(lifetime)
+            // command pipelines
+            .AddClasses(items => items.AssignableTo(typeof(ICommandPipeline<>)))
+            .AsImplementedInterfaces()
+            .WithLifetime(lifetime)
+            // command handlers
+            .AddClasses(items => items.AssignableTo(typeof(ICommandHandler<>)))
+            .AsImplementedInterfaces()
+            .WithLifetime(lifetime)
+            ;
     }
 }
